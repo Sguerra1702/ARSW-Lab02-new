@@ -6,3 +6,8 @@
 /wait-notify-excercise/pom.xml.versionsBackup
 /wait-notify-excercise/pom.xml.next
 /wait-notify-excercise/release.properties
+
+.idea
+*.iws
+*.iml
+*.ipr
