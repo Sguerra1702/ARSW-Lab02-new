@@ -68,18 +68,18 @@ public class SnakeApp {
     private void init() {
         
         
-        
         for (int i = 0; i != MAX_THREADS; i++) {
             
             snakes[i] = new Snake(i + 1, spawn[i], i + 1);
             snakes[i].addObserver(board);
+
             thread[i] = new Thread(snakes[i]);
             thread[i].start();
         }
 
         frame.setVisible(true);
 
-            
+        
         while (true) {
             int x = 0;
             for (int i = 0; i != MAX_THREADS; i++) {

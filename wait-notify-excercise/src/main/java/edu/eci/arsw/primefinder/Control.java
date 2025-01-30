@@ -17,6 +17,7 @@ public class Control extends Thread {
     private final static int TMILISECONDS = 5000;
 
     private final int NDATA = MAXVALUE / NTHREADS;
+    
 
     private PrimeFinderThread pft[];
     

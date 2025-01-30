@@ -57,9 +57,9 @@ public class Snake extends Observable implements Runnable {
 
             try {
                 if (hasTurbo == true) {
-                    Thread.sleep(500 / 3);
+                    Thread.sleep(4 / 3);
                 } else {
-                    Thread.sleep(500);
+                    Thread.sleep(4); 
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -139,7 +139,7 @@ public class Snake extends Observable implements Runnable {
 
     private void randomMovement(Cell newCell) {
         Random random = new Random();
-        int tmp = random.nextInt(4) + 1;
+        int tmp = random.nextInt(4) + 1; 
         if (tmp == Direction.LEFT && !(direction == Direction.RIGHT)) {
             direction = tmp;
         } else if (tmp == Direction.UP && !(direction == Direction.DOWN)) {

@@ -1,0 +1,19 @@
+# RESPUESTAS.txt
+
+## Posibles condiciones de carrera
+
+1. Acceso concurrente a la variable `direction`:
+   - La variable direction es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
+   - la Solución seria Utilizar `synchronized` o `ReentrantLock` para asegurar el acceso exclusivo a la variable `direction`.
+
+2. Acceso concurrente a la variable `newCell`:
+   - La variable newcell es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
+   - La solucion seria  Utilizar `synchronized` o `ReentrantLock` para asegurar el acceso exclusivo a la variable `newCell`.
+
+## Uso inadecuado de colecciones
+
+1. Uso de `ArrayList` sin sincronización:
+   - Si se están utilizando ArrayList u otras colecciones no sincronizadas en un contexto concurrente, esto puede llevar a errores.
+
+2. Acceso concurrente a la colección `gameboard`:
+   - La colección gameboard es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
