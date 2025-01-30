@@ -9,6 +9,8 @@ public class PrimeFinderThread extends Thread{
 	int a,b;
 	
 	private List<Integer> primes;
+
+    private boolean paused = false;
 	
 	public PrimeFinderThread(int a, int b) {
 		super();
@@ -18,14 +20,22 @@ public class PrimeFinderThread extends Thread{
 	}
 
         @Override
-	public void run(){
-            for (int i= a;i < b;i++){						
-                if (isPrime(i)){
+        public void run() {
+            for (int i = a; i < b; i++) {
+                synchronized (this) {
+                    while (paused) {
+                        try {
+                            wait(); // Espera si está pausado
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                if (isPrime(i)) {
                     primes.add(i);
-                    System.out.println(i);
                 }
             }
-	}
+        }
 	
 	boolean isPrime(int n) {
 	    boolean ans;
@@ -43,5 +53,14 @@ public class PrimeFinderThread extends Thread{
 	public List<Integer> getPrimes() {
 		return primes;
 	}
+
+    public synchronized void pauseThread() {
+        paused = true;
+    }
+
+    public synchronized void resumeThread() {
+        paused = false;
+        notify(); // Despierta el hilo
+    }
 	
 }
