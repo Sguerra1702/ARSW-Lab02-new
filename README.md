@@ -69,11 +69,11 @@ y la salida, sera la que esperamos:
 
 SnakeRace es una versión autónoma, multi-serpiente del famoso juego 'snake', basado en el proyecto de João Andrade -este ejercicio es un 'fork' del mismo-. En este juego:
 
-. N serpientes funcionan de manera autónoma.
-. No existe el concepto de colisión entre las mismas. La única forma de que mueran es estrellándose contra un muro.
-. Hay ratones distribuídos a lo largo del juego. Como en el juego clásico, cada vez que una serpiente se come a un ratón, ésta crece.
-. Existen unos puntos (flechas rojas) que teletransportan a las serpientes.
-Los rayos hacen que la serpiente aumente su velocidad.
+* N serpientes funcionan de manera autónoma.
+* No existe el concepto de colisión entre las mismas. La única forma de que mueran es estrellándose contra un muro.
+* Hay ratones distribuídos a lo largo del juego. Como en el juego clásico, cada vez que una serpiente se come a un ratón, ésta crece.
+* Existen unos puntos (flechas rojas) que teletransportan a las serpientes.
+* Los rayos hacen que la serpiente aumente su velocidad.
 
 ![imagen1](img/sshot.png)
 
