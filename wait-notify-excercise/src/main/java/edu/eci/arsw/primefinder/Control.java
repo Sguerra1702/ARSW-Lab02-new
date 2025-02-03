@@ -20,6 +20,7 @@ public class Control extends Thread {
     
 
     private PrimeFinderThread pft[];
+    private final Object lock = new Object();
     
     private Control() {
         super();
@@ -27,10 +28,10 @@ public class Control extends Thread {
 
         int i;
         for(i = 0;i < NTHREADS - 1; i++) {
-            PrimeFinderThread elem = new PrimeFinderThread(i*NDATA, (i+1)*NDATA);
+            PrimeFinderThread elem = new PrimeFinderThread(i*NDATA, (i+1)*NDATA, lock);
             pft[i] = elem;
         }
-        pft[i] = new PrimeFinderThread(i*NDATA, MAXVALUE + 1);
+        pft[i] = new PrimeFinderThread(i*NDATA, MAXVALUE + 1, lock);
     }
 
     public static Control newControl() {
@@ -59,9 +60,10 @@ public class Control extends Thread {
         }
 
     }
+
     private void pauseThreads() {
-        for (PrimeFinderThread thread : pft) {
-            thread.pauseThread();
+            for (PrimeFinderThread thread : pft) {
+                thread.pauseThread();
         }
     }
 
@@ -75,7 +77,7 @@ public class Control extends Thread {
         int totalPrimes = 0;
         for (PrimeFinderThread thread : pft) {
             totalPrimes += thread.getPrimes().size();
-        }
+    }
         System.out.println("Número total de primos encontrados hasta ahora: " + totalPrimes);
     }
 

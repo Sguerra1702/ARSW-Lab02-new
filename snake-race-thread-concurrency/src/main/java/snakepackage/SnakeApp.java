@@ -59,7 +59,7 @@ public class SnakeApp {
         frame.add(actionsBPabel,BorderLayout.SOUTH);
 
     }
-
+    
     public static void main(String[] args) {
         app = new SnakeApp();
         app.init();
