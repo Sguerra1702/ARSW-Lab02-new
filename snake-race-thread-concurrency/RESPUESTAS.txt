@@ -4,11 +4,14 @@
 
 1. Acceso concurrente a la variable `direction`:
    - La variable direction es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
-   - la Solución seria Utilizar `synchronized` o `ReentrantLock` para asegurar el acceso exclusivo a la variable `direction`.
+   la Solución seria Utilizar `synchronized` o  para asegurar el acceso exclusivo a la variable `direction`.
+
+2 . Acceso concurrente a `snakebody`:
+   - La lista que representa el cuerpo de la serpiente es manipulada por una hilo correspondiente a la serpiente, pero no tiene ninguna sincronización explicita, si varias serpientes modifican su cuerpo al mismo tiempo, podrian producirse inconsistencias 
 
 2. Acceso concurrente a la variable `newCell`:
    - La variable newcell es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
-   - La solucion seria  Utilizar `synchronized` o `ReentrantLock` para asegurar el acceso exclusivo a la variable `newCell`.
+   - La solucion seria  Utilizar `synchronized` para asegurar el acceso exclusivo a la variable `newCell`.
 
 ## Uso inadecuado de colecciones
 
@@ -17,3 +20,9 @@
 
 2. Acceso concurrente a la colección `gameboard`:
    - La colección gameboard es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
+
+
+## Uso inneesario de esperas activas 
+
+1.  Revision de las condiciones de juego de manera constante
+   - Si las serpientes estan constantemente, actualizando su estado podria generarse una espera activa al aumentar la velocidad de actualización de la serpiente 
