@@ -105,7 +105,7 @@ Recuerde que la suspensión de las serpientes NO es instantánea, y que se debe 
 
 Al implmentar la interfaz runnable, cada nueva serpiente, define su propio metodo run, que contiene la logica de como se mueve y el comportamiento arbitrario de cada serpiente. Al iniciar el hilo , se ejecuta su propio metodo run, en paralelo con los demas hilos de las demas serpientes.
 
-2. Revisar el archivo RESPUEESTAS.TXT
+2. Revisar el archivo RESPUESTAS.TXT
 
 Aqui se aumento la velocidad del juego y se llego a un error:
 
@@ -115,9 +115,11 @@ https://github.com/user-attachments/assets/11df0a1c-799f-4d9e-a00c-378510f47c9f
 El error indica que múltiples hilos intentan modificar o acceder a una estructura de datos compartida como lo es la LinkedList asociada al cuerpo de las serpientes al mismo tiempo sin una sincronización adecuada, lo que puede provocar un comportamiento inesperado
 Para arreglar esto podemos usar unos bloques de sincronización en los metodos checkIfBarrier y tambien el metodo drawsnake de la clase Board, y asi se solucionara el error, incluso si aumentamos aun mas la velocidad del juego.
 
-[local](img/video2.mp4)
 
-[local](img/video3.mp4)
+https://github.com/user-attachments/assets/84b5fd7f-37e2-4844-95f0-eb25524b3be2
+
+https://github.com/user-attachments/assets/048494b3-993c-4636-b86c-0299150c5530
+
 
 
 
