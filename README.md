@@ -97,5 +97,28 @@ Ejercicio
 
 Recuerde que la suspensión de las serpientes NO es instantánea, y que se debe garantizar que se muestre información consistente.
 
+## Desarrollo Parte II
+
+1. En la clase SnakeApp, se inicializan las serpientes y se asignan a hilos individuales, esto sucede en este metodo:
+
+![imagen1](img/7.png)
+
+Al implmentar la interfaz runnable, cada nueva serpiente, define su propio metodo run, que contiene la logica de como se mueve y el comportamiento arbitrario de cada serpiente. Al iniciar el hilo , se ejecuta su propio metodo run, en paralelo con los demas hilos de las demas serpientes.
+
+2. Revisar el archivo RESPUEESTAS.TXT
+
+Aqui se aumento la velocidad del juego y se llego a un error:
+
+![local](img/video1.mp4)
+
+El error indica que múltiples hilos intentan modificar o acceder a una estructura de datos compartida como lo es la LinkedList asociada al cuerpo de las serpientes al mismo tiempo sin una sincronización adecuada, lo que puede provocar un comportamiento inesperado
+Para arreglar esto podemos usar unos bloques de sincronización en los metodos checkIfBarrier y tambien el metodo drawsnake de la clase Board, y asi se solucionara el error, incluso si aumentamos aun mas la velocidad del juego.
+
+![local](img/video2.mp4)
+
+![local](img/video3.mp4)
+
+
+
 
 
