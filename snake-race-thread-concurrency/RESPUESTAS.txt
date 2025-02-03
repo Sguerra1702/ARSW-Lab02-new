@@ -22,7 +22,13 @@
    - La colección gameboard es accedida y modificada por múltiples hilos sin ninguna sincronización, lo que puede llevar a condiciones de carrera.
 
 
-## Uso inneesario de esperas activas 
+## Uso inecesario de esperas activas 
 
 1.  Revision de las condiciones de juego de manera constante
    - Si las serpientes estan constantemente, actualizando su estado podria generarse una espera activa al aumentar la velocidad de actualización de la serpiente 
+
+
+## Soluciones propuestas
+1 . Utilizar bloques sincronizados para porteger el acceso a los recursos o variables que acceden los hilos (utilizar Synchronized)
+2 . Uso de colecciones concurrentes.
+3 . Utilizar periodos de descanso para mantener un rendimiento estable , y evitar esperas activas 
