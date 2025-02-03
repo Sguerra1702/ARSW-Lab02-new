@@ -30,7 +30,7 @@ Tenga en cuenta:
 
 4. La instrucción notifyAll(), despierta todos los hilos que estan esperando por el objeto (hicieron wait()sobre el objeto).
 
-### Desarrollo parte I
+## Desarrollo parte I
 Se realizo la modificación primero de la clase PrimerFinderThread, a la cual le añadimos un atributo nuevo llamado Lock, el cual es un objeto que nos ayudara a manejar la sincronización, lo que hara que el hilo espere y se reanude utilizando ese objeto.
 Tambien se crearon los metodos pausethread y resumethread , para tener control sobre los hilos
 NOTA: Se recomienda no hacer bloques de sincronización innecesarios, debido a que pueden traer errores en el resultado
