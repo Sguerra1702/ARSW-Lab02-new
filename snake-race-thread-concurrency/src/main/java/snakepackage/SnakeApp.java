@@ -3,15 +3,13 @@ package snakepackage;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import enums.GridSize;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.awt.event.*;
+
 
 /**
  * @author jd-
@@ -37,72 +35,137 @@ public class SnakeApp {
     private static Board board;
     int nr_selected = 0;
     Thread[] thread = new Thread[MAX_THREADS];
+    private boolean isRunning = false;
+    private boolean isPaused = false;
+    private JButton startButton, pauseButton, resumeButton;
+    private JLabel longestSnakeLabel, worstSnakeLabel;
 
     public SnakeApp() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         frame = new JFrame("The Snake Race");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // frame.setSize(618, 640);
         frame.setSize(GridSize.GRID_WIDTH * GridSize.WIDTH_BOX + 17,
                 GridSize.GRID_HEIGHT * GridSize.HEIGH_BOX + 40);
         frame.setLocation(dimension.width / 2 - frame.getWidth() / 2,
                 dimension.height / 2 - frame.getHeight() / 2);
+
         board = new Board();
-        
-        
-        frame.add(board,BorderLayout.CENTER);
-        
-        JPanel actionsBPabel=new JPanel();
-        actionsBPabel.setLayout(new FlowLayout());
-        actionsBPabel.add(new JButton("Action "));
-        frame.add(actionsBPabel,BorderLayout.SOUTH);
+        frame.add(board, BorderLayout.CENTER);
 
-    }
-    
-    public static void main(String[] args) {
-        app = new SnakeApp();
-        app.init();
-    }
+        // Crear panel de botones
+        JPanel actionsPanel = new JPanel();
+        actionsPanel.setLayout(new FlowLayout());
+        startButton = new JButton("Iniciar");
+        pauseButton = new JButton("Pausar");
+        resumeButton = new JButton("Reanudar");
 
-    private void init() {
-        
-        
-        for (int i = 0; i != MAX_THREADS; i++) {
-            
+        pauseButton.setEnabled(false);
+        resumeButton.setEnabled(false);
+
+        longestSnakeLabel = new JLabel("Serpiente más larga: N/A");
+        worstSnakeLabel = new JLabel("Peor serpiente: N/A");
+
+        actionsPanel.add(startButton);
+        actionsPanel.add(pauseButton);
+        actionsPanel.add(resumeButton);
+        actionsPanel.add(longestSnakeLabel);
+        actionsPanel.add(worstSnakeLabel);
+
+        frame.add(actionsPanel, BorderLayout.SOUTH);
+
+        for (int i = 0; i < MAX_THREADS; i++) {
             snakes[i] = new Snake(i + 1, spawn[i], i + 1);
             snakes[i].addObserver(board);
+        }
+        // Agregar eventos a los botones
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startGame();
+            }
+        });
 
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pauseGame();
+            }
+        });
+
+        resumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resumeGame();
+            }
+        });
+
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        app = new SnakeApp();
+    }
+
+    private void startGame() {
+        if (isRunning) return;
+
+        isRunning = true;
+        isPaused = false;
+        startButton.setEnabled(false);
+        pauseButton.setEnabled(true);
+        resumeButton.setEnabled(false);
+
+        for (int i = 0; i < MAX_THREADS; i++) {
             thread[i] = new Thread(snakes[i]);
             thread[i].start();
         }
+    }
 
-        frame.setVisible(true);
+    private synchronized void pauseGame() {
+        if (!isRunning || isPaused) return;
 
-        
-        while (true) {
-            int x = 0;
-            for (int i = 0; i != MAX_THREADS; i++) {
-                if (snakes[i].isSnakeEnd() == true) {
-                    x++;
-                }
-            }
-            if (x == MAX_THREADS) {
-                break;
-            }
+        isPaused = true;
+        pauseButton.setEnabled(false);
+        resumeButton.setEnabled(true);
+
+        for (Snake snake : snakes) {
+            snake.pause();
         }
 
+        // Mostrar estadísticas después de pausar
+        //updateStatistics();
+    }
 
-        System.out.println("Thread (snake) status:");
-        for (int i = 0; i != MAX_THREADS; i++) {
-            System.out.println("["+i+"] :"+thread[i].getState());
+
+
+    private synchronized void resumeGame() {
+        if (!isPaused) return;
+
+        isPaused = false;
+        pauseButton.setEnabled(true);
+        resumeButton.setEnabled(false);
+
+        for (Snake snake : snakes) {
+            snake.resume();
         }
-        
+    }
 
+
+    private void salida() {
+        if (JOptionPane.showConfirmDialog(frame, "¿Desea salir del juego?", "Salir del juego",
+                JOptionPane.YES_NO_OPTION
+        ) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }else {
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
     }
 
     public static SnakeApp getApp() {
         return app;
     }
+
+
 
 }

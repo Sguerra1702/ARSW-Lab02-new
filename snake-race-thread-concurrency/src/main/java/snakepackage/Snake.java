@@ -22,6 +22,8 @@ public class Snake extends Observable implements Runnable {
     private final int INIT_SIZE = 3;
 
     private boolean hasTurbo = false;
+
+    private volatile boolean isPaused = false;
     private int jumps = 0;
     private boolean isSelected = false;
     private int growing = 0;
@@ -48,28 +50,34 @@ public class Snake extends Observable implements Runnable {
     @Override
     public void run() {
         while (!snakeEnd) {
+            synchronized (this) {
+                while (isPaused) {
+                    try {
+                        wait();  // Espera hasta que se llame notifyAll()
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             snakeCalc();
 
-            // NOTIFY CHANGES TO GUI
             setChanged();
             notifyObservers();
 
             try {
-                if (hasTurbo == true) {
-                    Thread.sleep(6);
+                if (hasTurbo) {
+                    Thread.sleep(500);
                 } else {
-                    Thread.sleep(6);
+                    Thread.sleep(500);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
-
         fixDirection(head);
-
     }
+
 
     private synchronized void snakeCalc() {
         head = snakeBody.peekFirst();
@@ -353,5 +361,16 @@ public class Snake extends Observable implements Runnable {
     public int getIdt() {
         return idt;
     }
+
+
+    public synchronized void pause() {
+        isPaused = true;
+    }
+
+    public synchronized void resume() {
+        isPaused = false;
+        notifyAll();
+    }
+
 
 }
