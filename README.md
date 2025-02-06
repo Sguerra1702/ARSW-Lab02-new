@@ -122,6 +122,14 @@ https://github.com/user-attachments/assets/048494b3-993c-4636-b86c-0299150c5530
 
 
 
+4. Como se puede observar, el juego está incompleto. Haga los ajustes necesarios para que a través de botones en la interfaz se pueda Iniciar/Pausar/Reanudar el juego: iniciar el juego no se ha iniciado aún, suspender el juego si está en ejecución, reactivar el juego si está suspendido. Para esto tenga en cuenta:
+  * Al pausar (suspender) el juego, en alguna parte de la interfaz (agregue los componentes que desee) se debe mostrar:
+    - La serpiente viva más larga.
+    - La peor serpiente: la que primero murió.
 
+    Recuerde que la suspensión de las serpientes NO es instantánea, y que se debe garantizar que se muestre información consistente. 
+  * se implementaron los botones de pausa y reanudar, con el siguiente comportamiento:.
+    * Al presionar el boton de pausa, se detiene el juego y se muestra la serpiente mas larga y la serpiente que murio primero, se habilita el boton de reanudar.
+    * al presionar reanudar, se reanuda el juego
 
 
